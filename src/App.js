@@ -12,7 +12,7 @@ function App(props) {
   const [id, setId] = useState("");
 
   const deleteHandler = (title) => {
-    fetch(`http://localhost:8080/delete/${title}`, {
+    fetch(`https://expense-backend-aeb5d.web.app/delete/${title}`, {
       method: 'DELETE'
     }).then((result) => {
       result.json().then((res) => {
@@ -35,7 +35,7 @@ function App(props) {
       date: expense.date.toISOString(),
     };
     try {
-      const result = await fetch('http://localhost:8080/create', {
+      const result = await fetch('https://expense-backend-aeb5d.web.app/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ function App(props) {
   }, [])
   const fetchData = async () => {
     try {
-      const result = await fetch('http://localhost:8080/list')
+      const result = await fetch('https://expense-backend-aeb5d.web.app/list')
       const jsonResult = await result.json()
       setResponse(jsonResult.data);
       setTitle(jsonResult.data[0].title)
@@ -97,7 +97,7 @@ function App(props) {
   function updateUser() {
     let item = { title, date, amount };
     console.log('item', item);
-    fetch(`http://localhost:8080/update/${id}`, {
+    fetch(`https://expense-backend-aeb5d.web.app/update/${id}`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
