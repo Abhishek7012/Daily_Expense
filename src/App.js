@@ -35,7 +35,7 @@ function App(props) {
       date: expense.date.toISOString(),
     };
     try {
-      const result = await fetch('https://expense-backend-aeb5d.web.app/create', {
+      const result = await fetch('https://expense-backend-aeb5d.web.app//create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
