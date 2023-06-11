@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
 import NewExpense from './component/NewExpense/NewExpense'
 import Expenses from './component/Expenses/Expenses';
 
 
-function App(props) {
+function App() {
   const [response, setResponse] = useState([]);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -12,7 +11,7 @@ function App(props) {
   const [id, setId] = useState("");
 
   const deleteHandler = (title) => {
-    fetch(`https://expense-backend-aeb5d.web.app/delete/${title}`, {
+    fetch(`https://expense-backend-9gvx.onrender.com/delete/${title}`, {
       method: 'DELETE'
     }).then((result) => {
       result.json().then((res) => {
@@ -25,8 +24,6 @@ function App(props) {
     });
   };
 
-
-
   const addExpenseHandler = async (expense) => {
     console.log('expense', expense);
     const myData = {
@@ -35,7 +32,7 @@ function App(props) {
       date: expense.date.toISOString(),
     };
     try {
-      const result = await fetch('https://expense-backend-aeb5d.web.app//create', {
+      const result = await fetch('https://expense-backend-9gvx.onrender.com/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -52,8 +49,6 @@ function App(props) {
         }
       });
 
-
-
     } catch (error) {
       console.log(error);
     }
@@ -62,9 +57,10 @@ function App(props) {
   useEffect(() => {
     fetchData()
   }, [])
+
   const fetchData = async () => {
     try {
-      const result = await fetch('https://expense-backend-aeb5d.web.app/list')
+      const result = await fetch('https://expense-backend-9gvx.onrender.com/list')
       const jsonResult = await result.json()
       setResponse(jsonResult.data);
       setTitle(jsonResult.data[0].title)
@@ -75,11 +71,9 @@ function App(props) {
       console.log(error);
     }
   };
-  console.log('resonse', response);
 
 
   const updateHandler = (data) => {
-    console.log('data updateHandler', data);
     /* `setTitle(data[0].title)` is updating the state variable `title` with the value of `data[0].title`.
     This is used in the input field to display the current value of the title of the first expense in
     the list. */
@@ -89,15 +83,13 @@ function App(props) {
     setId(data.id)
   }
 
-  console.log('id', id);
   /**
    * This function updates a user's data by sending a PUT request to a specified URL with the updated
    * data in JSON format.
    */
   function updateUser() {
     let item = { title, date, amount };
-    console.log('item', item);
-    fetch(`https://expense-backend-aeb5d.web.app/update/${id}`, {
+    fetch(`https://expense-backend-9gvx.onrender.com/update/${id}`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -121,18 +113,18 @@ function App(props) {
         <Expenses items={response} onDeleteHandler={deleteHandler} onUpdateHandler={updateHandler} />
       </div>
       <div className="new-expense">
-        <div className="new-expense__control" >        
-             <label>Title</label>
- <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> <br></br> 
- </div>
-        <div className="new-expense__control" >             
-           <label>Date</label>
-     <input type='text' value={date} onChange={(e) => setDate(e.target.value)} /> <br></br> 
-     </div>
-        <div className="new-expense__control" >       
-                 <label>Amount</label>
-     <input type='text' value={amount} onChange={(e) => setAmount(e.target.value)} /> <br></br>
-     </div>
+        <div className="new-expense__control" >
+          <label>Title</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> <br></br>
+        </div>
+        <div className="new-expense__control" >
+          <label>Date</label>
+          <input type='text' value={date} onChange={(e) => setDate(e.target.value)} /> <br></br>
+        </div>
+        <div className="new-expense__control" >
+          <label>Amount</label>
+          <input type='text' value={amount} onChange={(e) => setAmount(e.target.value)} /> <br></br>
+        </div>
         <button onClick={updateUser} >Update User</button>
       </div>
     </>
