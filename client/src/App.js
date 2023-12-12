@@ -43,9 +43,9 @@ function App() {
       const resultInJson = await result.json();
       setResponse(response => {
         if (response.length === 0) {
-          return [resultInJson]; // Create a new array with resultInJson if response is empty
+          return [resultInJson]; 
         } else {
-          return [...response, resultInJson]; // Spread response and add resultInJson if response is not empty
+          return [...response, resultInJson]; 
         }
       });
 
@@ -71,22 +71,15 @@ function App() {
       console.log(error);
     }
   };
-
-
-  const updateHandler = (data) => {
-    /* `setTitle(data[0].title)` is updating the state variable `title` with the value of `data[0].title`.
-    This is used in the input field to display the current value of the title of the first expense in
-    the list. */
+   const updateHandler = (data) => {
+   
     setTitle(data.title)
     setDate(data.date)
     setAmount(data.amount)
     setId(data.id)
   }
 
-  /**
-   * This function updates a user's data by sending a PUT request to a specified URL with the updated
-   * data in JSON format.
-   */
+ 
   function updateUser() {
     let item = { title, date, amount };
     fetch(`https://expense-backend-9gvx.onrender.com/update/${id}`, {
